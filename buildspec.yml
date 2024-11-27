@@ -1,0 +1,30 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 20  # Use the appropriate Node.js version
+    commands:
+      - echo "Installing dependencies using pnpm"
+      - npm install -g pnpm  # Ensure pnpm is available globally
+      - pnpm install  # Install dependencies using pnpm
+
+  build:
+    commands:
+      - echo "Building the project"
+      - pnpm run build  # Run the build script from package.json
+
+  post_build:
+    commands:
+      - echo "Build completed successfully"
+      # Optionally, you can add commands to deploy or store your build artifacts
+
+artifacts:
+  files:
+    - '**/*'  # Specify which files to include in the artifact, or provide a path to the build directory
+  base-directory: dist  # Specify the directory where the build output is located (e.g., dist for Vite)
+
+cache:
+  paths:
+    - node_modules/**/*  # Cache the node_modules to speed up future builds
+    - .pnpm-store/**/*   # Cache the pnpm store
